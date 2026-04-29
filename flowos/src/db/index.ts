@@ -2,24 +2,13 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-let _db: ReturnType<typeof drizzle<typeof schema>> | null = null;
+// Obtenemos la URL de la base de datos de las variables de entorno
+const connectionString = process.env.DATABASE_URL!;
 
-/**
- * Conexión singleton a Postgres (Supabase).
- * Lazy para que el build no falle si DATABASE_URL todavía no está seteada.
- */
-export function getDb() {
-  if (_db) return _db;
-  const url = process.env.DATABASE_URL;
-  if (!url) {
-    throw new Error("DATABASE_URL is not set");
-  }
-  const client = postgres(url, {
-    prepare: false,
-    max: 1,
-  });
-  _db = drizzle(client, { schema });
-  return _db;
-}
+// Iniciamos el cliente de Postgres
+const client = postgres(connectionString, { prepare: false });
+
+// Exportamos 'db' directamente, que es lo que tus APIs están esperando
+export const db = drizzle(client, { schema });
 
 export { schema };
