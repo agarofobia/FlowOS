@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Editorial / architectural palette
+     * Paper — warm off-white                #FAF8F3
+     * Ink — warm deep black                 #1A1814
+     * Ochre — warm gold accent              #C8902C
+     * Rust — deep terracotta accent         #A6442B
+     * Moss — forest green for success       #5C6B41
+     */
+    --flow-paper: 38 35% 96%;
+    --flow-ink: 36 14% 9%;
+    --flow-ochre: 36 65% 48%;
+    --flow-rust: 12 60% 41%;
+    --flow-moss: 78 24% 34%;
+
+    --background: 38 35% 96%;
+    --foreground: 36 14% 9%;
+    --card: 38 30% 99%;
+    --card-foreground: 36 14% 9%;
+    --primary: 36 14% 9%;
+    --primary-foreground: 38 35% 96%;
+    --secondary: 38 20% 92%;
+    --secondary-foreground: 36 14% 9%;
+    --muted: 38 18% 88%;
+    --muted-foreground: 36 8% 38%;
+    --accent: 36 65% 48%;
+    --accent-foreground: 38 35% 96%;
+    --destructive: 12 60% 41%;
+    --destructive-foreground: 38 35% 96%;
+    --border: 36 12% 80%;
+    --input: 36 12% 80%;
+    --ring: 36 14% 9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 36 14% 9%;
+    --foreground: 38 35% 96%;
+    --card: 36 14% 12%;
+    --card-foreground: 38 35% 96%;
+    --primary: 38 35% 96%;
+    --primary-foreground: 36 14% 9%;
+    --secondary: 36 10% 18%;
+    --secondary-foreground: 38 35% 96%;
+    --muted: 36 10% 18%;
+    --muted-foreground: 36 12% 62%;
+    --accent: 36 65% 55%;
+    --accent-foreground: 36 14% 9%;
+    --destructive: 12 65% 50%;
+    --destructive-foreground: 38 35% 96%;
+    --border: 36 10% 22%;
+    --input: 36 10% 22%;
+    --ring: 38 35% 96%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Clase utilitaria para serif display */
+  .font-display {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Texto pequeño en mayúsculas con tracking — para etiquetas editoriales */
+  .label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Línea de regla fina para separar secciones (estilo libro) */
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      hsl(var(--border)) 12%,
+      hsl(var(--border)) 88%,
+      transparent 100%
+    );
+  }
+
+  /* Grano sutil en backgrounds para evitar el flat AI look */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  /* Numbered editorial section (01., 02., etc.) */
+  .section-num {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.05em;
+  }
+
+  /* Botón primario con feel editorial */
+  .btn-ink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: -0.005em;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.2s ease;
+  }
+  .btn-ink:hover {
+    transform: translateY(-1px);
+    background: hsl(var(--foreground) / 0.92);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    background: transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .btn-ghost:hover {
+    border-color: hsl(var(--foreground) / 0.4);
+    background: hsl(var(--foreground) / 0.03);
+  }
+}
